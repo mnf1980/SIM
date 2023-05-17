@@ -1,0 +1,60 @@
+include "target.tmh"
+
+
+//program startup
+int main() 
+{ 
+	
+	
+	if(Init(&EventHandle)) return 1; 
+	RegisterGameCB(); // GAME INPUT SOCKET CALLBACK 
+	
+} 
+
+int EventHandle(int type, alias o, int x) 
+{ 
+	DefaultMapping(&o, x); 
+} 
+// GAME INPUT SOCKET CALLBACK {{{ 
+int port = 42069; 
+define CDATA_LEN 80 
+alias cdata = "--------------------------------------------------------------------------------"; 
+//int Flags;
+
+int RegisterGameCB() 
+{ // InitSocketServer(int port, int useUDP=0, int interface=0) (UDP here) 
+_gch = &GameCallback; 
+InitSocketServer( port, 1, 0); 
+
+} 
+
+int GameCallback(int data, int size) 
+{ 
+    char c;
+    Map(&c, data); Dim(&c, size + 1);
+    c[size] = 0;
+
+    if (strcmp(&c, "aircraft=A-10C_2") == 0) {
+       printf("The string 'aircraft:A-10C_2' is present.\xa");
+    } else {
+        printf("The string 'aircraft:A-10C_2' is not present.\xa");
+    }
+    
+	printf("%s\xa", &c);
+	
+	
+	//printf( &c);
+	//printf("%d\xa", data);
+	//if((size > 0) & (size < CDATA_LEN)) 
+	//{
+	//	Map(&cdata, data); 
+	//	cdata[size] = 0; 
+	//	Traitement(&cdata, size); 
+	//} 
+} 
+
+int Traitement(alias buf, int buf_len) 
+{ 
+	//printf("%d\xa", buf);
+	//processing code here: 
+}
