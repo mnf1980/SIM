@@ -1,0 +1,36 @@
+int main() 
+{ 
+	if(Init(&EventHandle)) return 1; 
+	RegisterGameCB(); // GAME INPUT SOCKET CALLBACK 
+} 
+
+int EventHandle(int type, alias o, int x) 
+{ 
+	DefaultMapping(&o, x); 
+} 
+// GAME INPUT SOCKET CALLBACK {{{ 
+int port = 5009; 
+define CDATA_LEN 80 
+alias cdata = "--------------------------------------------------------------------------------"; 
+
+int RegisterGameCB() 
+{ // InitSocketServer(int port, int useUDP=0, int interface=0) (UDP here) 
+_gch = &GameCallback; 
+InitSocketServer( port, 1, 0); 
+
+} 
+
+int GameCallback(int data, int size) 
+{ 
+	if((size > 0) & (size < CDATA_LEN)) 
+	{
+		Map(&cdata, data); 
+		cdata[size] = 0; 
+		Traitement(&cdata, size); 
+	} 
+} 
+
+int Traitement(alias buf, int buf_len) 
+{ 
+	processing code here: 
+}
