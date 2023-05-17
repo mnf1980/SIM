@@ -32,5 +32,5 @@ int GameCallback(int data, int size)
 
 int Traitement(alias buf, int buf_len) 
 { 
-	processing code here: 
+	//processing code here: 
 }
